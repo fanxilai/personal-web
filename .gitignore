@@ -1,0 +1,24 @@
+node_modules/
+dist/
+.vite/
+.superpowers/
+*.log
+Thumbs.db
+.DS_Store
+
+# private source materials and local references
+HO沙盘项目/
+世界资源研究所WRI实习/
+竞赛/
+管理运筹学竞赛/
+英语水平/
+荣誉证书/
+docs/
+8fd985c9ebdb15e4fea8a966d6c3f416.mp4
+background.txt
+Com.txt
+Com2.txt
+樊熙来_简历.pdf
+src/assets/ho-speed-chart.png
+src/assets/uncoupling-demo.mp4
+src/assets/wri-energy-chart.png
