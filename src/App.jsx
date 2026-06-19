@@ -1,31 +1,28 @@
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 import BorderGlow from "./components/BorderGlow";
-import Carousel, { CarouselIcon } from "./components/Carousel";
+import CapabilityGrid from "./components/CapabilityGrid";
 import DotField from "./components/DotField";
-import { profile, projects, strengths } from "./data/portfolio";
+import ProjectShowcase from "./components/ProjectShowcase";
+import SectionHeading from "./components/SectionHeading";
+import { capabilities, profile, projects } from "./data/portfolio";
 import usePortfolioAnimations from "./hooks/usePortfolioAnimations";
 
 const navItems = [
-  { label: "经历", href: "#profile" },
+  { label: "简介", href: "#profile" },
   { label: "项目", href: "#projects" },
-  { label: "能力", href: "#strengths" },
+  { label: "能力", href: "#capabilities" },
   { label: "联系", href: "#contact" },
 ];
-
-function GlowCard({ as: Component = "div", className = "", children, animated = false }) {
-  return (
-    <BorderGlow className={`${className} motion-card`} animated={animated}>
-      <Component className="glow-card-content">{children}</Component>
-    </BorderGlow>
-  );
-}
 
 function Header() {
   return (
     <header className="site-header" aria-label="主导航">
       <a className="brand" href="#hero" aria-label="返回首页">
         <span className="brand-mark">FXL</span>
-        <span>{profile.name}</span>
+        <div className="brand-copy">
+          <strong>{profile.name}</strong>
+          <span>{profile.title}</span>
+        </div>
       </a>
       <nav>
         {navItems.map((item) => (
@@ -45,40 +42,53 @@ function Hero() {
   return (
     <section className="hero" id="hero">
       <video className="hero-video" src={profile.heroVideo} autoPlay muted loop playsInline preload="metadata" />
-      <div className="hero-shade" />
+      <div className="hero-overlay" />
       <Header />
       <div className="hero-inner">
         <div className="hero-copy">
-          <p className="hero-context">{profile.title}</p>
-          <h1 className="hero-title-compact">樊熙来本科阶段作品集</h1>
+          <p className="hero-name">{profile.englishName}</p>
+          <h1 className="hero-title">{profile.name}本科阶段作品集</h1>
+          <p className="hero-subtitle">{profile.subtitle}</p>
           <p className="hero-summary">{profile.summary}</p>
+          <div className="hero-interest-row">
+            {profile.researchInterests.map((item) => (
+              <span key={item}>{item}</span>
+            ))}
+          </div>
           <div className="hero-actions">
             <a className="primary-button" href="#projects">
-              查看科研项目
+              查看精选项目
             </a>
             <a className="ghost-button" href={`mailto:${profile.email}`}>
               {profile.email}
             </a>
           </div>
         </div>
-        <aside className="hero-panel" aria-label="教育背景摘要">
-          <span className="panel-label">Education Profile</span>
-          <strong>{profile.school}</strong>
-          <dl>
-            <div>
-              <dt>学院</dt>
-              <dd>{profile.college}</dd>
-            </div>
-            <div>
-              <dt>专业</dt>
-              <dd>{profile.major}</dd>
-            </div>
-            <div>
-              <dt>方向</dt>
-              <dd>{profile.direction}</dd>
-            </div>
-          </dl>
-        </aside>
+
+        <BorderGlow className="hero-meta-panel" backgroundColor="#161f2a" borderRadius={28} animated>
+          <div className="hero-meta-panel-inner">
+            <span className="panel-label">Academic Profile</span>
+            <strong>{profile.title}</strong>
+            <dl>
+              <div>
+                <dt>学校</dt>
+                <dd>{profile.school}</dd>
+              </div>
+              <div>
+                <dt>学院</dt>
+                <dd>{profile.college}</dd>
+              </div>
+              <div>
+                <dt>专业</dt>
+                <dd>{profile.major}</dd>
+              </div>
+              <div>
+                <dt>方向</dt>
+                <dd>{profile.direction}</dd>
+              </div>
+            </dl>
+          </div>
+        </BorderGlow>
       </div>
       <a className="scroll-cue" href="#profile">
         <span />
@@ -92,183 +102,92 @@ function ProfileSection() {
   return (
     <section className="section profile-section motion-section" id="profile">
       <div className="section-shell">
-        <div className="section-marquee" aria-hidden="true">
-          PROFILE
-        </div>
-        <div className="section-heading">
-          <span>01 / 教育背景与研究基础</span>
-          <h2>交通运输专业本科阶段的课程基础、科研训练与项目经历。</h2>
-        </div>
-        <div className="profile-grid">
-          <GlowCard className="profile-card main-profile" animated>
-            <p className="profile-kicker">{profile.period}</p>
-            <h3>{profile.name}</h3>
-            <p>{profile.summary}</p>
-            <div className="contact-lines">
-              <a href={`mailto:${profile.email}`}>{profile.email}</a>
-              <a href={`tel:${profile.phone.replace(/[^+\d]/g, "")}`}>{profile.phone}</a>
-            </div>
-          </GlowCard>
-          <GlowCard className="profile-card stat-board">
-            {profile.stats.map((stat) => (
-              <div key={stat.label} className="stat-item">
-                <strong>{stat.value}</strong>
-                <span>{stat.label}</span>
+        <SectionHeading
+          index="01"
+          marquee="PROFILE"
+          eyebrow="个人简介"
+          title="以交通运输问题为线索，系统整理本科阶段的课程训练、研究参与与项目经验。"
+          lead="页面表达更偏个人研究主页而不是模板化简历，重点展示研究兴趣、训练路径和已完成的项目积累。"
+          wide
+        />
+
+        <div className="profile-layout">
+          <BorderGlow className="profile-card intro-card motion-card" backgroundColor="#161f2a" borderRadius={28}>
+            <div className="profile-card-inner">
+              <p className="profile-label">{profile.period}</p>
+              <h3>{profile.name}</h3>
+              <p>{profile.summary}</p>
+              <p>{profile.statement}</p>
+              <div className="contact-lines">
+                <a href={`mailto:${profile.email}`}>{profile.email}</a>
+                <a href={`tel:${profile.phone.replace(/[^+\d]/g, "")}`}>{profile.phone}</a>
               </div>
-            ))}
-          </GlowCard>
-          <GlowCard className="profile-card highlight-card">
-            <h3>主要经历</h3>
-            <ul>
-              {profile.highlights.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </GlowCard>
-          <GlowCard className="profile-card skill-strip">
-            <h3>工具与方法</h3>
-            <div>
-              {profile.skills.map((skill) => (
-                <span key={skill}>{skill}</span>
+            </div>
+          </BorderGlow>
+
+          <BorderGlow className="profile-card stats-card motion-card" backgroundColor="#171f29" borderRadius={28}>
+            <div className="stats-grid">
+              {profile.stats.map((item) => (
+                <div key={item.label}>
+                  <strong>{item.value}</strong>
+                  <span>{item.label}</span>
+                </div>
               ))}
             </div>
-          </GlowCard>
+          </BorderGlow>
+
+          <BorderGlow className="profile-card highlights-card motion-card" backgroundColor="#18212d" borderRadius={28}>
+            <div className="profile-card-inner">
+              <span className="card-mini-title">Research Notes</span>
+              <ul>
+                {profile.highlights.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          </BorderGlow>
+
+          <BorderGlow className="profile-card methods-card motion-card" backgroundColor="#17202b" borderRadius={28}>
+            <div className="profile-card-inner">
+              <span className="card-mini-title">Methods & Tools</span>
+              <div className="method-tags">
+                {profile.methods.map((item) => (
+                  <span key={item}>{item}</span>
+                ))}
+              </div>
+            </div>
+          </BorderGlow>
         </div>
       </div>
     </section>
-  );
-}
-
-function ProjectVisual({ visual, title }) {
-  if (visual.kind === "ho") {
-    return (
-      <div className="project-media media-collage">
-        {visual.images.map((image, index) => (
-          <figure key={image.alt} className={index === 0 ? "large-photo" : "small-photo"}>
-            <img src={image.src} alt={image.alt} loading="lazy" />
-            <figcaption>{image.alt}</figcaption>
-          </figure>
-        ))}
-      </div>
-    );
-  }
-
-  if (visual.kind === "wri") {
-    return (
-      <div className="project-media research-panel">
-        <div className="panel-topline">交通低碳研究支持</div>
-        <div className="research-grid">
-          <div>
-            <span>Policy Review</span>
-            <strong>政策与路线图梳理</strong>
-          </div>
-          <div>
-            <span>Data Work</span>
-            <strong>资料清洗与指标整理</strong>
-          </div>
-          <div>
-            <span>Translation</span>
-            <strong>英文资料翻译</strong>
-          </div>
-        </div>
-        <figure className="chart-inset">
-          <img src={visual.chart} alt={`${title} 数据图表资料`} loading="lazy" />
-        </figure>
-      </div>
-    );
-  }
-
-  if (visual.kind === "optimization") {
-    return (
-      <div className="project-media optimization-panel">
-        <div className="panel-topline">Crew Scheduling Model</div>
-        <div className="objective-box">
-          <span>Objective</span>
-          <strong>Minimize total crew cost</strong>
-        </div>
-        <div className="constraint-list">
-          <span>ST / CO / CR</span>
-          <span>HD</span>
-          <span>Base Transfer</span>
-          <span>Role Substitution</span>
-          <span>Wage Balance</span>
-        </div>
-        <div className="case-table">
-          {visual.cases.map((item) => (
-            <div key={item.name}>
-              <strong>{item.name}</strong>
-              <span>Cost {item.cost}</span>
-              <span>Check warnings {item.check}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="project-media modeling-panel">
-      <div className="panel-topline">Mathematical Modeling Workflow</div>
-      <div className="model-flow">
-        {visual.steps.map((step, index) => (
-          <div key={step}>
-            <span>{String(index + 1).padStart(2, "0")}</span>
-            <strong>{step}</strong>
-          </div>
-        ))}
-      </div>
-      <div className="formula-box">
-        <span>Representative model</span>
-        <strong>冰厚估计 + 承载力校核 + 安全范围计算</strong>
-      </div>
-    </div>
-  );
-}
-
-function ProjectCard({ project }) {
-  return (
-    <GlowCard className="project-card" as="article">
-      <ProjectVisual visual={project.visual} title={project.title} />
-      <div className="project-body">
-        <div className="project-meta">
-          <span>{project.type}</span>
-          <span>{project.time}</span>
-        </div>
-        <h3>{project.title}</h3>
-        <p className="project-accent">{project.accent}</p>
-        <p>{project.description}</p>
-        <ul>
-          {project.contributions.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-        <div className="metric-row">
-          {project.metrics.map((metric) => (
-            <div key={`${project.title}-${metric.label}`}>
-              <strong>{metric.value}</strong>
-              <span>{metric.label}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </GlowCard>
   );
 }
 
 function ProjectsSection() {
+  const featuredProjects = useMemo(() => projects.filter((item) => item.level === "featured"), []);
+  const compactProjects = useMemo(() => projects.filter((item) => item.level === "compact"), []);
+
   return (
     <section className="section projects-section motion-section" id="projects">
       <div className="section-shell">
-        <div className="section-marquee" aria-hidden="true">
-          PROJECTS
+        <SectionHeading
+          index="02"
+          marquee="PROJECTS"
+          eyebrow="精选项目"
+          title="以研究问题、方法路径与个人承担内容为主线，展示本科阶段最具代表性的项目工作。"
+          lead="前两项作为重点展示，后两项用更紧凑的方式补充方法训练与建模基础。"
+          wide
+        />
+
+        <div className="featured-projects">
+          {featuredProjects.map((project) => (
+            <ProjectShowcase key={project.slug} project={project} />
+          ))}
         </div>
-        <div className="section-heading wide">
-          <span>02 / 科研、建模与交通研究经历</span>
-          <h2>按研究问题、方法和个人工作展示本科阶段的主要项目。</h2>
-        </div>
-        <div className="projects-list">
-          {projects.map((project) => (
-            <ProjectCard key={project.title} project={project} />
+
+        <div className="compact-projects">
+          {compactProjects.map((project) => (
+            <ProjectShowcase key={project.slug} project={project} />
           ))}
         </div>
       </div>
@@ -276,34 +195,19 @@ function ProjectsSection() {
   );
 }
 
-function StrengthsSection() {
-  const strengthItems = strengths.map((item, index) => ({
-    id: item.title,
-    title: item.title,
-    description: item.text,
-    icon: <CarouselIcon value={String(index + 1).padStart(2, "0")} />,
-  }));
-
+function CapabilitiesSection() {
   return (
-    <section className="section strengths-section motion-section" id="strengths">
+    <section className="section capabilities-section motion-section" id="capabilities">
       <div className="section-shell">
-        <div className="section-marquee" aria-hidden="true">
-          CAPABILITIES
-        </div>
-        <div className="section-heading">
-          <span>03 / 研究训练与方法能力</span>
-          <h2>面向交通运输研究的课程基础、建模能力、程序实现和资料整理能力。</h2>
-        </div>
-        <div className="strength-carousel-stage">
-          <Carousel
-            items={strengthItems}
-            baseWidth={560}
-            autoplay
-            autoplayDelay={3600}
-            pauseOnHover
-            loop
-          />
-        </div>
+        <SectionHeading
+          index="03"
+          marquee="CAPABILITIES"
+          eyebrow="研究能力"
+          title="把能力拆解为课程基础、建模方法、程序实现、资料整理与学术表达，而不是普通的“个人优势”列表。"
+          lead="页面气质更偏高端个人站，但内容表达仍然保持研究训练导向。"
+          wide
+        />
+        <CapabilityGrid items={capabilities} />
       </div>
     </section>
   );
@@ -313,18 +217,21 @@ function ContactSection() {
   return (
     <section className="contact-section motion-section" id="contact">
       <div className="section-shell contact-shell">
-        <div>
+        <div className="contact-copy">
           <div className="section-marquee contact-marquee" aria-hidden="true">
             CONTACT
           </div>
           <span className="section-index">04 / 联系方式</span>
-          <h2>希望进一步交流交通运输方向的科研训练与研究生阶段学习规划。</h2>
+          <h2>期待继续在交通运输领域接受更系统的研究训练，并围绕运输组织、优化与数据分析展开深入学习。</h2>
         </div>
-        <GlowCard className="contact-panel">
-          <p>{profile.title}</p>
-          <a href={`mailto:${profile.email}`}>{profile.email}</a>
-          <a href={`tel:${profile.phone.replace(/[^+\d]/g, "")}`}>{profile.phone}</a>
-        </GlowCard>
+
+        <BorderGlow className="contact-panel motion-card" backgroundColor="#17202b" borderRadius={30}>
+          <div className="contact-panel-inner">
+            <p>{profile.subtitle}</p>
+            <a href={`mailto:${profile.email}`}>{profile.email}</a>
+            <a href={`tel:${profile.phone.replace(/[^+\d]/g, "")}`}>{profile.phone}</a>
+          </div>
+        </BorderGlow>
       </div>
     </section>
   );
@@ -341,18 +248,18 @@ function App() {
       <main className="content-below-hero">
         <DotField
           className="below-hero-dotfield"
-          dotRadius={1.5}
-          dotSpacing={18}
-          cursorRadius={460}
-          bulgeStrength={52}
-          glowRadius={180}
-          gradientFrom="rgba(85, 247, 236, 0.24)"
-          gradientTo="rgba(133, 181, 60, 0.12)"
-          glowColor="#55f7ec"
+          dotRadius={1.35}
+          dotSpacing={19}
+          cursorRadius={420}
+          bulgeStrength={42}
+          glowRadius={150}
+          gradientFrom="rgba(176, 206, 241, 0.2)"
+          gradientTo="rgba(139, 196, 255, 0.1)"
+          glowColor="#9dc4f4"
         />
         <ProfileSection />
         <ProjectsSection />
-        <StrengthsSection />
+        <CapabilitiesSection />
         <ContactSection />
       </main>
     </div>

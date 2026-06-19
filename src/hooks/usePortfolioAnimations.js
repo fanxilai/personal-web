@@ -17,45 +17,37 @@ export default function usePortfolioAnimations(scopeRef) {
 
     const ctx = gsap.context(() => {
       const openingEase = "expo.out";
-      const scrollEase = "power4.out";
+      const scrollEase = "power3.out";
 
       gsap.set(".opening-curtain", { scaleY: 1, transformOrigin: "top center" });
-      gsap.set(".site-header", { y: -84, opacity: 0 });
-      gsap.set(".hero-video", { scale: 1.16, filter: "saturate(0.72) contrast(1.14) brightness(0.38)" });
-      gsap.set(".hero-context", { y: 34, opacity: 0 });
-      gsap.set(".hero-title-compact", {
-        y: 96,
-        scaleX: 0.82,
+      gsap.set(".site-header", { y: -36, opacity: 0 });
+      gsap.set(".hero-video", { scale: 1.12, yPercent: -3, filter: "saturate(0.74) contrast(1.03) brightness(0.42)" });
+      gsap.set(".hero-name", { y: 18, opacity: 0 });
+      gsap.set(".hero-title", {
+        y: 90,
+        scaleX: 0.9,
         opacity: 0,
         clipPath: "inset(0 100% 0 0)",
         transformOrigin: "left center",
       });
-      gsap.set([".hero-summary", ".hero-actions", ".hero-panel", ".scroll-cue"], {
-        y: 42,
+      gsap.set([".hero-subtitle", ".hero-summary", ".hero-interest-row span", ".hero-actions", ".hero-meta-panel", ".scroll-cue"], {
+        y: 26,
         opacity: 0,
       });
 
       const opening = gsap.timeline({ defaults: { ease: openingEase } });
       opening
-        .to(".opening-curtain", { scaleY: 0, duration: 1.45, delay: 0.18 })
-        .to(".hero-video", { scale: 1.02, filter: "saturate(0.82) contrast(1.08) brightness(0.62)", duration: 2.1 }, 0.1)
-        .to(".site-header", { y: 0, opacity: 1, duration: 1.05 }, 0.62)
-        .to(".hero-context", { y: 0, opacity: 1, duration: 1.0 }, 0.8)
-        .to(
-          ".hero-title-compact",
-          {
-            y: 0,
-            scaleX: 1,
-            opacity: 1,
-            clipPath: "inset(0 0% 0 0)",
-            duration: 1.55,
-          },
-          0.92,
-        )
-        .to(".hero-summary", { y: 0, opacity: 1, duration: 1.15 }, 1.45)
-        .to(".hero-actions", { y: 0, opacity: 1, duration: 1.1 }, 1.62)
-        .to(".hero-panel", { y: 0, opacity: 1, duration: 1.2 }, 1.72)
-        .to(".scroll-cue", { y: 0, opacity: 1, duration: 0.9 }, 2.2);
+        .to(".opening-curtain", { scaleY: 0, duration: 1.25, delay: 0.12 })
+        .to(".hero-video", { scale: 1.02, yPercent: 0, filter: "saturate(0.8) contrast(1.02) brightness(0.56)", duration: 1.9 }, 0.06)
+        .to(".site-header", { y: 0, opacity: 1, duration: 0.95 }, 0.42)
+        .to(".hero-name", { y: 0, opacity: 1, duration: 0.9 }, 0.72)
+        .to(".hero-title", { y: 0, scaleX: 1, opacity: 1, clipPath: "inset(0 0 0 0)", duration: 1.45 }, 0.82)
+        .to(".hero-subtitle", { y: 0, opacity: 1, duration: 0.92 }, 1.18)
+        .to(".hero-summary", { y: 0, opacity: 1, duration: 1.0 }, 1.32)
+        .to(".hero-interest-row span", { y: 0, opacity: 1, duration: 0.86, stagger: 0.06 }, 1.42)
+        .to(".hero-actions", { y: 0, opacity: 1, duration: 0.95 }, 1.58)
+        .to(".hero-meta-panel", { y: 0, opacity: 1, duration: 1.05 }, 1.36)
+        .to(".scroll-cue", { y: 0, opacity: 1, duration: 0.82 }, 1.92);
 
       gsap.to(".hero-video", {
         yPercent: 8,
@@ -64,45 +56,51 @@ export default function usePortfolioAnimations(scopeRef) {
           trigger: ".hero",
           start: "top top",
           end: "bottom top",
-          scrub: 0.9,
+          scrub: 0.8,
         },
       });
 
       gsap.utils.toArray(".motion-section").forEach((section) => {
         const marquee = section.querySelector(".section-marquee");
-        const headingParts = section.querySelectorAll(".section-heading span, .section-heading h2, .section-index, .contact-shell h2");
-        const cards = section.querySelectorAll(".motion-card, .carousel-container");
-        const media = section.querySelectorAll(".project-media");
-        const mediaImages = section.querySelectorAll(".project-media img");
+        const headingText = section.querySelectorAll(".section-heading > span, .section-heading h2, .section-heading p, .section-index, .contact-copy h2");
+        const cards = section.querySelectorAll(".motion-card");
+        const visuals = section.querySelectorAll(".project-visual");
+        const images = section.querySelectorAll(".project-figure img, .project-chart img");
 
         if (marquee) {
           gsap.set(marquee, {
-            y: 130,
-            scaleY: 0.72,
+            y: 86,
+            scale: 0.94,
             opacity: 0,
             clipPath: "inset(0 0 100% 0)",
-            transformOrigin: "left bottom",
           });
         }
-        if (headingParts.length) gsap.set(headingParts, { y: 54, opacity: 0, clipPath: "inset(0 0 100% 0)" });
+
+        if (headingText.length) {
+          gsap.set(headingText, { y: 42, opacity: 0, clipPath: "inset(0 0 100% 0)" });
+        }
+
         if (cards.length) {
           gsap.set(cards, {
-            y: 90,
+            y: 54,
             opacity: 0,
-            rotateX: 5,
-            transformPerspective: 1200,
-            transformOrigin: "50% 80%",
-            clipPath: "inset(18% 0 0 0 round 12px)",
+            clipPath: "inset(12% 0 0 0 round 28px)",
           });
         }
-        if (media.length) gsap.set(media, { clipPath: "inset(0 100% 0 0 round 12px)" });
-        if (mediaImages.length) gsap.set(mediaImages, { scale: 1.08, yPercent: 4 });
+
+        if (visuals.length) {
+          gsap.set(visuals, { clipPath: "inset(0 100% 0 0 round 26px)" });
+        }
+
+        if (images.length) {
+          gsap.set(images, { scale: 1.06, yPercent: 3 });
+        }
 
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: section,
-            start: "top 74%",
-            end: "bottom 20%",
+            start: "top 72%",
+            end: "bottom 18%",
             toggleActions: "play none none reverse",
           },
           defaults: { ease: scrollEase },
@@ -111,34 +109,38 @@ export default function usePortfolioAnimations(scopeRef) {
         if (marquee) {
           tl.to(marquee, {
             y: 0,
-            scaleY: 1,
-            opacity: 0.18,
-            clipPath: "inset(0 0 0% 0)",
-            duration: 1.25,
+            scale: 1,
+            opacity: 0.14,
+            clipPath: "inset(0 0 0 0)",
+            duration: 1.2,
           });
         }
-        if (headingParts.length) {
-          tl.to(headingParts, { y: 0, opacity: 1, clipPath: "inset(0 0 0% 0)", duration: 1.0, stagger: 0.08 }, 0.18);
-        }
-        if (cards.length) {
-          tl.to(cards, { y: 0, opacity: 1, rotateX: 0, clipPath: "inset(0% 0 0 0 round 12px)", duration: 1.18, stagger: 0.13 }, 0.5);
-        }
-        if (media.length) {
-          tl.to(media, { clipPath: "inset(0 0% 0 0 round 12px)", duration: 1.15, stagger: 0.1 }, 0.58);
-        }
-        if (mediaImages.length) {
-          tl.to(mediaImages, { scale: 1, yPercent: 0, duration: 1.4, stagger: 0.08 }, 0.66);
+
+        if (headingText.length) {
+          tl.to(headingText, { y: 0, opacity: 1, clipPath: "inset(0 0 0 0)", duration: 0.92, stagger: 0.08 }, 0.12);
         }
 
-        mediaImages.forEach((image) => {
+        if (cards.length) {
+          tl.to(cards, { y: 0, opacity: 1, clipPath: "inset(0 0 0 0 round 28px)", duration: 1.05, stagger: 0.11 }, 0.36);
+        }
+
+        if (visuals.length) {
+          tl.to(visuals, { clipPath: "inset(0 0 0 0 round 26px)", duration: 1.0, stagger: 0.08 }, 0.44);
+        }
+
+        if (images.length) {
+          tl.to(images, { scale: 1, yPercent: 0, duration: 1.18, stagger: 0.06 }, 0.5);
+        }
+
+        images.forEach((image) => {
           gsap.to(image, {
-            yPercent: -5,
+            yPercent: -4,
             ease: "none",
             scrollTrigger: {
-              trigger: image.closest(".project-card") || section,
+              trigger: image.closest(".project-showcase") || section,
               start: "top bottom",
               end: "bottom top",
-              scrub: 0.85,
+              scrub: 0.7,
             },
           });
         });
