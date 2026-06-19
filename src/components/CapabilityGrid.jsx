@@ -7,7 +7,7 @@ export default function CapabilityGrid({ items }) {
         <BorderGlow
           key={item.title}
           className="capability-card motion-card"
-          backgroundColor={index % 3 === 0 ? "#151e29" : "#18212d"}
+          backgroundColor={index % 3 === 0 ? "#ffffff" : "#f8fbf8"}
           borderRadius={24}
         >
           <div className="capability-card-inner">

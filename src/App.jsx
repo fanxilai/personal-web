@@ -65,7 +65,7 @@ function Hero() {
           </div>
         </div>
 
-        <BorderGlow className="hero-meta-panel" backgroundColor="#161f2a" borderRadius={28} animated>
+        <BorderGlow className="hero-meta-panel" backgroundColor="#ffffff" borderRadius={28} animated>
           <div className="hero-meta-panel-inner">
             <span className="panel-label">Academic Profile</span>
             <strong>{profile.title}</strong>
@@ -106,13 +106,13 @@ function ProfileSection() {
           index="01"
           marquee="PROFILE"
           eyebrow="个人简介"
-          title="以交通运输问题为线索，系统整理本科阶段的课程训练、研究参与与项目经验。"
-          lead="页面表达更偏个人研究主页而不是模板化简历，重点展示研究兴趣、训练路径和已完成的项目积累。"
+          title="本科阶段，我围绕交通运输相关问题持续进行课程学习、研究参与与项目训练。"
+          lead=""
           wide
         />
 
         <div className="profile-layout">
-          <BorderGlow className="profile-card intro-card motion-card" backgroundColor="#161f2a" borderRadius={28}>
+          <BorderGlow className="profile-card intro-card motion-card" backgroundColor="#ffffff" borderRadius={28}>
             <div className="profile-card-inner">
               <p className="profile-label">{profile.period}</p>
               <h3>{profile.name}</h3>
@@ -125,7 +125,7 @@ function ProfileSection() {
             </div>
           </BorderGlow>
 
-          <BorderGlow className="profile-card stats-card motion-card" backgroundColor="#171f29" borderRadius={28}>
+          <BorderGlow className="profile-card stats-card motion-card" backgroundColor="#f4f8f4" borderRadius={28}>
             <div className="stats-grid">
               {profile.stats.map((item) => (
                 <div key={item.label}>
@@ -136,7 +136,7 @@ function ProfileSection() {
             </div>
           </BorderGlow>
 
-          <BorderGlow className="profile-card highlights-card motion-card" backgroundColor="#18212d" borderRadius={28}>
+          <BorderGlow className="profile-card highlights-card motion-card" backgroundColor="#ffffff" borderRadius={28}>
             <div className="profile-card-inner">
               <span className="card-mini-title">Research Notes</span>
               <ul>
@@ -147,7 +147,7 @@ function ProfileSection() {
             </div>
           </BorderGlow>
 
-          <BorderGlow className="profile-card methods-card motion-card" backgroundColor="#17202b" borderRadius={28}>
+          <BorderGlow className="profile-card methods-card motion-card" backgroundColor="#f3f8f4" borderRadius={28}>
             <div className="profile-card-inner">
               <span className="card-mini-title">Methods & Tools</span>
               <div className="method-tags">
@@ -174,8 +174,8 @@ function ProjectsSection() {
           index="02"
           marquee="PROJECTS"
           eyebrow="精选项目"
-          title="以研究问题、方法路径与个人承担内容为主线，展示本科阶段最具代表性的项目工作。"
-          lead="前两项作为重点展示，后两项用更紧凑的方式补充方法训练与建模基础。"
+          title="本科阶段研究与实践方向"
+          lead=""
           wide
         />
 
@@ -203,8 +203,8 @@ function CapabilitiesSection() {
           index="03"
           marquee="CAPABILITIES"
           eyebrow="研究能力"
-          title="把能力拆解为课程基础、建模方法、程序实现、资料整理与学术表达，而不是普通的“个人优势”列表。"
-          lead="页面气质更偏高端个人站，但内容表达仍然保持研究训练导向。"
+          title="个人能力模块"
+          lead=""
           wide
         />
         <CapabilityGrid items={capabilities} />
@@ -222,10 +222,10 @@ function ContactSection() {
             CONTACT
           </div>
           <span className="section-index">04 / 联系方式</span>
-          <h2>期待继续在交通运输领域接受更系统的研究训练，并围绕运输组织、优化与数据分析展开深入学习。</h2>
+          <h2>希望在交通运输领域继续深入学习与研究。</h2>
         </div>
 
-        <BorderGlow className="contact-panel motion-card" backgroundColor="#17202b" borderRadius={30}>
+        <BorderGlow className="contact-panel motion-card" backgroundColor="#ffffff" borderRadius={30}>
           <div className="contact-panel-inner">
             <p>{profile.subtitle}</p>
             <a href={`mailto:${profile.email}`}>{profile.email}</a>

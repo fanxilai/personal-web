@@ -66,7 +66,11 @@ function ProjectVisual({ project }) {
 
 export default function ProjectShowcase({ project }) {
   return (
-    <BorderGlow className={`project-showcase motion-card ${project.level}`} backgroundColor="#151d27" borderRadius={26}>
+    <BorderGlow
+      className={`project-showcase motion-card ${project.level}`}
+      backgroundColor={project.level === "featured" ? "#ffffff" : "#f8fbf8"}
+      borderRadius={26}
+    >
       <article className="project-showcase-inner">
         <ProjectVisual project={project} />
         <div className="project-content">
