@@ -106,7 +106,7 @@ function ProfileSection() {
           index="01"
           marquee="PROFILE"
           eyebrow="个人简介"
-          title="本科阶段，我围绕交通运输相关问题持续进行课程学习、研究参与与项目训练。"
+          title="本科阶段，我围绕交通运输相关问题进行课程学习、参与研究与项目训练。"
           lead=""
           wide
         />
