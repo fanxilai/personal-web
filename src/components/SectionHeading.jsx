@@ -1,12 +1,11 @@
-export default function SectionHeading({ index, marquee, eyebrow, title, lead = "", wide = false }) {
+export default function SectionHeading({ index, eyebrow, title }) {
   return (
-    <div className={`section-heading ${wide ? "wide" : ""}`}>
-      <div className="section-marquee" aria-hidden="true">
-        {marquee}
+    <header className="section-heading">
+      <div className="section-heading-meta">
+        <span>{index}</span>
+        <span>{eyebrow}</span>
       </div>
-      <span>{index} / {eyebrow}</span>
       <h2>{title}</h2>
-      {lead ? <p>{lead}</p> : null}
-    </div>
+    </header>
   );
 }

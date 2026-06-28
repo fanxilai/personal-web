@@ -1,5 +1,3 @@
-import BorderGlow from "./BorderGlow";
-
 function ProjectVisual({ project }) {
   const { visual, title } = project;
 
@@ -19,11 +17,9 @@ function ProjectVisual({ project }) {
   if (visual.kind === "wri") {
     return (
       <div className="project-visual visual-wri">
-        <div className="visual-label">Transport & Carbon Research</div>
-        <div className="visual-copy">
-          <span>Policy Review</span>
-          <span>Data Structuring</span>
-          <span>Research Support</span>
+        <div className="visual-heading">
+          <span>Transport & Carbon Research</span>
+          <strong>Policy / Data / Research</strong>
         </div>
         <figure className="project-chart">
           <img src={visual.chart} alt={`${title} 图表`} loading="lazy" />
@@ -35,7 +31,10 @@ function ProjectVisual({ project }) {
   if (visual.kind === "optimization") {
     return (
       <div className="project-visual visual-optimization">
-        <div className="visual-label">Crew Scheduling Model</div>
+        <div className="visual-heading">
+          <span>Crew Scheduling Model</span>
+          <strong>Three Cases</strong>
+        </div>
         <div className="case-grid">
           {visual.cases.map((item) => (
             <div key={item.name}>
@@ -51,7 +50,10 @@ function ProjectVisual({ project }) {
 
   return (
     <div className="project-visual visual-modeling">
-      <div className="visual-label">Modeling Workflow</div>
+      <div className="visual-heading">
+        <span>Mathematical Modeling</span>
+        <strong>Research Workflow</strong>
+      </div>
       <div className="step-grid">
         {visual.steps.map((step, index) => (
           <div key={step}>
@@ -64,38 +66,33 @@ function ProjectVisual({ project }) {
   );
 }
 
-export default function ProjectShowcase({ project }) {
+export default function ProjectShowcase({ project, index }) {
   return (
-    <BorderGlow
-      className={`project-showcase motion-card ${project.level}`}
-      backgroundColor={project.level === "featured" ? "#ffffff" : "#f8fbf8"}
-      borderRadius={26}
-    >
-      <article className="project-showcase-inner">
-        <ProjectVisual project={project} />
-        <div className="project-content">
-          <div className="project-meta">
-            <span>{project.type}</span>
-            <span>{project.time}</span>
-          </div>
-          <h3>{project.title}</h3>
-          <p className="project-accent">{project.accent}</p>
-          <p className="project-description">{project.description}</p>
-          <ul className="project-points">
-            {project.contributions.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-          <div className="project-metrics">
-            {project.metrics.map((metric) => (
-              <div key={`${project.slug}-${metric.label}`}>
-                <strong>{metric.value}</strong>
-                <span>{metric.label}</span>
-              </div>
-            ))}
-          </div>
+    <article className={`project-entry motion-item ${project.level}`}>
+      <ProjectVisual project={project} />
+      <div className="project-content">
+        <div className="project-index">{String(index).padStart(2, "0")}</div>
+        <div className="project-meta">
+          <span>{project.type}</span>
+          <span>{project.time}</span>
         </div>
-      </article>
-    </BorderGlow>
+        <h3>{project.title}</h3>
+        <p className="project-accent">{project.accent}</p>
+        <p className="project-description">{project.description}</p>
+        <ul className="project-points">
+          {project.contributions.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+        <dl className="project-metrics">
+          {project.metrics.map((metric) => (
+            <div key={`${project.slug}-${metric.label}`}>
+              <dt>{metric.label}</dt>
+              <dd>{metric.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </article>
   );
 }
