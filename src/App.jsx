@@ -53,7 +53,7 @@ function Hero() {
           </div>
           <h1>
             {profile.name}
-            <span>交通运输本科阶段作品集</span>
+            <span>交通运输方向学习与实践</span>
           </h1>
           <div className="hero-intro-footer">
             <p>{profile.subtitle}</p>
@@ -196,7 +196,7 @@ function ContactSection() {
   return (
     <section className="contact-section motion-section" id="contact">
       <div className="section-shell">
-        <SectionHeading index="04" eyebrow="Contact" title="希望在交通运输领域继续深入学习与研究。" />
+        <SectionHeading index="04" eyebrow="Contact" title="欢迎交流" />
         <div className="contact-directory motion-item">
           <p>{profile.subtitle}</p>
           <div>

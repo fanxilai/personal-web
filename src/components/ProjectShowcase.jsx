@@ -4,12 +4,11 @@ function ProjectVisual({ project }) {
   if (visual.kind === "ho") {
     return (
       <div className="project-visual visual-ho">
-        <figure className="project-figure primary">
-          <img src={visual.images[0].src} alt={visual.images[0].alt} loading="lazy" />
-        </figure>
-        <figure className="project-figure secondary">
-          <img src={visual.images[1].src} alt={visual.images[1].alt} loading="lazy" />
-        </figure>
+        {visual.images.map((img, i) => (
+          <figure key={i} className={`project-figure${i === 1 ? " chart" : ""}`}>
+            <img src={img.src} alt={img.alt} loading="lazy" />
+          </figure>
+        ))}
       </div>
     );
   }
