@@ -200,6 +200,7 @@ video {
 .hero-intro-footer p:first-child {
   color: var(--ink);
   font-weight: 700;
+  white-space: pre-line;
 }
 
 .hero-feature-grid {
@@ -819,6 +820,7 @@ video {
   padding-left: 0;
   color: var(--ink-soft);
   line-height: 1.65;
+  white-space: pre-line;
 }
 
 .contact-directory div {

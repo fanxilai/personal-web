@@ -9,7 +9,7 @@ export const profile = {
   name: "樊熙来",
   englishName: "FAN XILAI",
   title: "交通运输方向学习与实践",
-  subtitle: "北京交通大学交通运输学院本科生 · 已保研至中山大学智能工程学院交通运输硕士",
+  subtitle: "· 北京交通大学交通运输学院本科生\n· 已保研至中山大学智能工程学院交通运输硕士",
   summary:
     "我的学习与实践主要围绕运筹优化、人工智能与数据分析展开，关注如何用建模与算法解决真实世界的复杂决策问题。",
   statement:
